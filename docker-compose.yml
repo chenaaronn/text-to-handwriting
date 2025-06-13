@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "8000:8000"
+    restart: unless-stopped
+    environment:
+      - PYTHONUNBUFFERED=1
+    # Add volumes if you want live reload in dev
+
+  ml:
+    build:
+      context: ./ml
+    command: ["bash"]
+    tty: true
+    # Uncomment below to mount code for dev
+    # volumes:
+    #   - ./ml:/ml
