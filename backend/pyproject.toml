@@ -1,24 +1,26 @@
 [tool.poetry]
-name = "handwriteai"
+name = "handwriteai-backend"
 version = "0.1.0"
-description = "Handwriting synthesis and manipulation API"
+description = "Backend for HandwriteAI - Text to Handwriting Conversion"
 authors = ["Your Name <your.email@example.com>"]
 package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.9"
-fastapi = "^0.104.0"
-uvicorn = "^0.24.0"
+fastapi = "^0.109.0"
+uvicorn = "^0.27.0"
 pydantic = "^2.4.2"
 python-multipart = "^0.0.6"
-torch = "^2.1.0"
-numpy = "^1.24.0"
+torch = "^2.2.0"
+numpy = "^1.26.0"
 pillow = "^10.0.0"
 redis = "^5.0.1"
 sqlalchemy = "^2.0.23"
 alembic = "^1.12.1"
 python-jose = {extras = ["cryptography"], version = "^3.3.0"}
 passlib = {extras = ["bcrypt"], version = "^1.7.4"}
+supabase = "^2.3.0"
+python-dotenv = "^1.0.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
