@@ -13,6 +13,7 @@ HandwriteAI is a web-based application that transforms typed text into personali
 - **Interactive canvas editing**: Drag, resize, and reposition handwritten elements
 - **Multiple paper styles**: Lined, dot grid, blank, and custom backgrounds
 - **Export options**: PDF and PNG formats optimized for Notability/GoodNotes or printing
+- **Cloud Storage**: Store handwriting samples and generated outputs using Supabase
 
 ## 🛠️ Tech Stack
 
@@ -22,12 +23,17 @@ HandwriteAI is a web-based application that transforms typed text into personali
 - Konva.js for canvas manipulation
 - TailwindCSS for styling
 - Vite for build tooling
+- Supabase for storage and authentication
 
 ### Backend
 
 - FastAPI (Python)
 - PyTorch for ML model
-- SQLite for development (PostgreSQL for production)
+- Supabase (PostgreSQL database + additional services)
+  - Managed PostgreSQL database
+  - Authentication
+  - Storage
+  - Real-time subscriptions
 - Redis for caching
 
 ## 🏗️ Project Structure
@@ -47,6 +53,33 @@ handwriteai/
 - Node.js 18+
 - Python 3.9+
 - Poetry (Python package manager)
+- Docker and Docker Compose
+- Supabase account
+
+### Supabase Setup
+
+1. Create a new project at [Supabase](https://supabase.com)
+
+   - This will automatically provision a PostgreSQL database
+   - You'll get access to the database, authentication, and storage services
+
+2. Create the following storage buckets:
+
+   - `handwriting-samples`: For storing user handwriting samples
+   - `generated-outputs`: For storing generated handwriting outputs
+   - `user-profiles`: For storing user profile data
+
+3. Set up environment variables:
+   - Frontend (.env):
+     ```
+     VITE_SUPABASE_URL=your-project-url
+     VITE_SUPABASE_ANON_KEY=your-anon-key
+     ```
+   - Backend (.env):
+     ```
+     SUPABASE_URL=your-project-url
+     SUPABASE_SERVICE_KEY=your-service-key
+     ```
 
 ### Development Setup
 
