@@ -6,7 +6,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "80:80"
     environment:
       - NODE_ENV=production
     env_file:
@@ -30,24 +30,4 @@ services:
       - ./backend/.env
     volumes:
       - ./backend:/app
-    depends_on:
-      - ml
     restart: unless-stopped
-    # Add volumes if you want live reload in dev
-
-  ml:
-    build:
-      context: ./ml
-      dockerfile: Dockerfile
-    volumes:
-      - ./ml:/app
-      - ./data:/app/data
-    environment:
-      - PYTHONPATH=/app
-    env_file:
-      - ./ml/.env
-    command: ["bash"]
-    tty: true
-    # Uncomment below to mount code for dev
-    # volumes:
-    #   - ./ml:/ml
