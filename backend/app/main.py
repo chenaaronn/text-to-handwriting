@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.api import handwriting
-from app.routes import supabase
+from app.api.v1 import api_router
 
 app = FastAPI(
     title="HandwriteAI API",
@@ -18,9 +17,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Include routers
-app.include_router(handwriting.router, prefix="/api/handwriting", tags=["handwriting"])
-app.include_router(supabase.router, prefix="/api/supabase", tags=["supabase"])
+# Include API router
+app.include_router(api_router, prefix="/api/v1")
 
 @app.get("/")
 async def root():
