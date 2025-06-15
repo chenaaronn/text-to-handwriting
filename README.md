@@ -86,8 +86,8 @@ handwriteai/
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/handwriteai.git
-   cd handwriteai
+   git clone https://github.com/cyourusername/text-to-handwriting.git)
+   cd text-to-handwriting
    ```
 
 2. Set up the frontend:
