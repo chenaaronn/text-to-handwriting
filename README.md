@@ -170,6 +170,15 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 For any questions or feedback, please open an issue in the GitHub repository.
 
-<img width="895" alt="Screenshot 2025-06-14 at 8 55 28 PM" src="https://github.com/user-attachments/assets/0026edbd-466b-429e-af70-6748f36dfb6d" />
+<img width="895" alt="Screenshot 2025-06-14 at 8 55 28 PM" src="https://github.co<img width="530" alt="Screenshot 2025-06-14 at 9 01 02 PM" src="https://github.com/user-attachments/assets/bd009f8e-240c-42e5-97b5-94098a8f4d0c" />
+m/user-attachments/assets/0026edbd-466b-429e-af70-6748f36dfb6d" />
+These operations follow the CRUD concept:
 
+Create → POST
+
+Read → GET
+
+Update → PUT/PATCH
+
+Delete → DELETE
 
