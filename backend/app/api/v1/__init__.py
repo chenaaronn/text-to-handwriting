@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api.v1.endpoints import supabase, handwriting, users
+from app.api.v1.endpoints import supabase, handwriting, users, auth
 
 api_router = APIRouter()
 
@@ -7,5 +7,6 @@ api_router = APIRouter()
 api_router.include_router(supabase.router, prefix="/supabase", tags=["supabase"])
 api_router.include_router(handwriting.router, prefix="/handwriting", tags=["handwriting"])
 api_router.include_router(users.router, prefix="/users", tags=["users"])
+api_router.include_router(auth.router, prefix="/auth", tags=["authentication"])
 
 # API v1 package 

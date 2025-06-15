@@ -14,3 +14,7 @@ async def hello():
 @router.get("/bye")
 async def bye():
     return {"message": "bye, World!"}
+
+@router.get("/user")
+async def get_user():
+    return {"message": "User endpoint is not implemented yet."}

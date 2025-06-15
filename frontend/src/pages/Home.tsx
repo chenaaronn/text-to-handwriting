@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import HandwritingCanvas from "../components/HandwritingCanvas";
+import { Link } from "react-router-dom";
+import { useAuthStore } from "../store/auth";
 
 const Home: React.FC = () => {
   const [text, setText] = useState("");
@@ -7,6 +9,7 @@ const Home: React.FC = () => {
     "blank"
   );
   const [isGenerating, setIsGenerating] = useState(false);
+  const { isAuthenticated } = useAuthStore();
 
   const handleStrokeComplete = async (points: any[]) => {
     // TODO: Implement stroke analysis and style extraction
@@ -28,92 +31,114 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-900 mb-8">
-            ✍️ HandwriteAI
-          </h1>
-          <p className="text-xl text-gray-600 mb-8">
-            Transform your text into personalized handwriting
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Left column: Input and controls */}
-          <div className="space-y-6">
-            <div>
-              <label
-                htmlFor="text"
-                className="block text-sm font-medium text-gray-700"
-              >
-                Enter your text
-              </label>
-              <textarea
-                id="text"
-                rows={4}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                placeholder="Type your text here..."
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Paper Style
-              </label>
-              <div className="flex space-x-4">
-                <button
-                  className={`px-4 py-2 rounded-md ${
-                    background === "blank"
-                      ? "bg-primary-500 text-white"
-                      : "bg-white text-gray-700"
-                  }`}
-                  onClick={() => setBackground("blank")}
-                >
-                  Blank
-                </button>
-                <button
-                  className={`px-4 py-2 rounded-md ${
-                    background === "lined"
-                      ? "bg-primary-500 text-white"
-                      : "bg-white text-gray-700"
-                  }`}
-                  onClick={() => setBackground("lined")}
-                >
-                  Lined
-                </button>
-                <button
-                  className={`px-4 py-2 rounded-md ${
-                    background === "dotted"
-                      ? "bg-primary-500 text-white"
-                      : "bg-white text-gray-700"
-                  }`}
-                  onClick={() => setBackground("dotted")}
-                >
-                  Dotted
-                </button>
+    <div className="bg-white">
+      {/* Hero section */}
+      <div className="relative bg-white overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          <div className="relative z-10 pb-8 bg-white sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+            <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
+              <div className="sm:text-center lg:text-left">
+                <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
+                  <span className="block xl:inline">
+                    Transform your text into
+                  </span>{" "}
+                  <span className="block text-indigo-600 xl:inline">
+                    beautiful handwriting
+                  </span>
+                </h1>
+                <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
+                  HandwriteAI uses advanced machine learning to convert your
+                  typed text into personalized, realistic handwriting. Perfect
+                  for notes, letters, and creative projects.
+                </p>
+                <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
+                  {isAuthenticated ? (
+                    <Link
+                      to="/dashboard"
+                      className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                    >
+                      Go to Dashboard
+                    </Link>
+                  ) : (
+                    <div className="rounded-md shadow">
+                      <Link
+                        to="/register"
+                        className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 md:py-4 md:text-lg md:px-10"
+                      >
+                        Get started
+                      </Link>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
+            </main>
+          </div>
+        </div>
+      </div>
 
-            <button
-              className="w-full bg-primary-500 text-white px-4 py-2 rounded-md hover:bg-primary-600 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50"
-              onClick={handleGenerate}
-              disabled={!text.trim() || isGenerating}
-            >
-              {isGenerating ? "Generating..." : "Generate Handwriting"}
-            </button>
+      {/* Feature section */}
+      <div className="py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="lg:text-center">
+            <h2 className="text-base text-indigo-600 font-semibold tracking-wide uppercase">
+              Features
+            </h2>
+            <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+              Everything you need to create beautiful handwriting
+            </p>
           </div>
 
-          {/* Right column: Canvas */}
-          <div>
-            <HandwritingCanvas
-              width={600}
-              height={400}
-              onStrokeComplete={handleStrokeComplete}
-              background={background}
-            />
+          <div className="mt-10">
+            <div className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 md:gap-x-8 md:gap-y-10">
+              {[
+                {
+                  title: "Personalized Handwriting",
+                  description:
+                    "Train the AI with your own handwriting samples for a truly personalized experience.",
+                },
+                {
+                  title: "Multiple Styles",
+                  description:
+                    "Choose from various handwriting styles or create your own custom style.",
+                },
+                {
+                  title: "Easy Export",
+                  description:
+                    "Export your handwritten text as PDF or PNG files for any use.",
+                },
+                {
+                  title: "Real-time Preview",
+                  description:
+                    "See your text transform into handwriting in real-time as you type.",
+                },
+              ].map((feature) => (
+                <div key={feature.title} className="relative">
+                  <dt>
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
+                      <svg
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </div>
+                    <p className="ml-16 text-lg leading-6 font-medium text-gray-900">
+                      {feature.title}
+                    </p>
+                  </dt>
+                  <dd className="mt-2 ml-16 text-base text-gray-500">
+                    {feature.description}
+                  </dd>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

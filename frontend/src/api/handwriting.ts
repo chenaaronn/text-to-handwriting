@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8000/api';
+const API_BASE_URL = 'http://localhost:8000/api/v1/supbase/hello';
 
 interface Point {
   x: number;
@@ -32,7 +32,7 @@ export const handwritingApi = {
       console.error('Error synthesizing handwriting:', error);
       throw error;
     }
-  },
+  }, 
 
   async analyzeStyle(request: HandwritingRequest): Promise<HandwritingResponse> {
     try {
