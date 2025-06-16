@@ -1,34 +1,9 @@
-import React, { useState } from "react";
-import HandwritingCanvas from "../components/HandwritingCanvas";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useAuthStore } from "../store/auth";
 
 const Home: React.FC = () => {
-  const [text, setText] = useState("");
-  const [background, setBackground] = useState<"blank" | "lined" | "dotted">(
-    "blank"
-  );
-  const [isGenerating, setIsGenerating] = useState(false);
   const { isAuthenticated } = useAuthStore();
-
-  const handleStrokeComplete = async (points: any[]) => {
-    // TODO: Implement stroke analysis and style extraction
-    console.log("Stroke completed:", points);
-  };
-
-  const handleGenerate = async () => {
-    if (!text.trim()) return;
-
-    setIsGenerating(true);
-    try {
-      // TODO: Implement handwriting generation
-      console.log("Generating handwriting for:", text);
-    } catch (error) {
-      console.error("Error generating handwriting:", error);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
 
   return (
     <div className="bg-white">

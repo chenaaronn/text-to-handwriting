@@ -1,3 +1,4 @@
+import React from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,6 +10,7 @@ import { LoginForm } from "./components/auth/LoginForm";
 import { RegisterForm } from "./components/auth/RegisterForm";
 import Home from "./pages/Home";
 import { Navigation } from "./components/Navigation";
+import TextInputPage from "./pages/TextInputPage";
 
 // Protected Route component
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
@@ -16,7 +18,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   return isAuthenticated ? <>{children}</> : <Navigate to="/login" />;
 };
 
-function App() {
+const App: React.FC = () => {
   return (
     <Router>
       <div className="min-h-screen bg-gray-50">
@@ -25,6 +27,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
+          <Route path="/text-input" element={<TextInputPage />} />
           <Route
             path="/dashboard"
             element={
@@ -42,6 +45,6 @@ function App() {
       </div>
     </Router>
   );
-}
+};
 
 export default App;
