@@ -13,7 +13,7 @@ class UserLogin(BaseModel):
     password: str
 
 class User(UserBase):
-    id: int
+    id: str
     is_active: bool = True
 
     class Config:

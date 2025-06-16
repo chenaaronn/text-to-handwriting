@@ -3,19 +3,18 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.v1 import api_router
 
 app = FastAPI(
-    title="HandwriteAI API",
-    description="API for handwriting synthesis and manipulation",
-    version="0.1.0"
+    title="Text to Handwriting API",
+    description="API for converting text to handwriting",
+    version="1.0.0"
 )
 
-# Configure CORS
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Frontend URL
+    allow_origins=["*"],  # In production, replace with your frontend URL
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
-    expose_headers=["*"]
 )
 
 # Include API router

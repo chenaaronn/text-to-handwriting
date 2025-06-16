@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/auth";
-import { authApi } from "../../api/auth";
+import { supabase } from "../../lib/supabase"; // Your initialized Supabase client
 
 export const RegisterForm = () => {
   const navigate = useNavigate();
@@ -27,19 +27,42 @@ export const RegisterForm = () => {
     }
 
     try {
-      const user = await authApi.register({ email, username, password });
-      setUser(user);
+      // Sign up with user metadata
+      const { data: authData, error: signUpError } = await supabase.auth.signUp(
+        {
+          email,
+          password,
+          options: {
+            data: {
+              username,
+            },
+          },
+        }
+      );
 
-      // Login after successful registration
-      const { access_token } = await authApi.login({
-        username: email,
-        password,
+      if (signUpError || !authData.user) {
+        setError(signUpError?.message || "Registration failed");
+        return;
+      }
+
+      // Insert user into `profiles` table
+      const { error: profileError } = await supabase.from("profiles").insert({
+        id: authData.user.id,
+        username,
+        full_name: username,
+        avatar_url: null,
       });
-      setToken(access_token);
 
+      if (profileError) {
+        setError("Failed to create user profile: " + profileError.message);
+        return;
+      }
+
+      setUser(authData.user);
+      setToken(authData.session?.access_token || "");
       navigate("/dashboard");
-    } catch (err) {
-      setError("Registration failed. Please try again.");
+    } catch (err: any) {
+      setError("Something went wrong. Try again.");
     } finally {
       setLoading(false);
     }
@@ -64,7 +87,7 @@ export const RegisterForm = () => {
                 name="email"
                 type="email"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Email address"
               />
             </div>
@@ -77,7 +100,7 @@ export const RegisterForm = () => {
                 name="username"
                 type="text"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Username"
               />
             </div>
@@ -90,7 +113,7 @@ export const RegisterForm = () => {
                 name="password"
                 type="password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Password"
               />
             </div>
@@ -103,7 +126,7 @@ export const RegisterForm = () => {
                 name="confirmPassword"
                 type="password"
                 required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 placeholder="Confirm Password"
               />
             </div>
