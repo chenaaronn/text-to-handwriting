@@ -1,0 +1,6 @@
+<svg width="240" height="80" viewBox="0 0 240 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="240" height="80" fill="#FAFAFA" stroke="#E5E7EB" stroke-width="1"/>
+<text x="120" y="30" font-family="Arial" font-size="12" fill="#6B7280" text-anchor="middle">Font Preview</text>
+<text x="120" y="50" font-family="Arial" font-size="16" fill="#374151" text-anchor="middle">The quick brown fox</text>
+<text x="120" y="68" font-family="Arial" font-size="10" fill="#9CA3AF" text-anchor="middle">Replace with actual font PNG</text>
+</svg>
